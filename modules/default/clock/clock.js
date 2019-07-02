@@ -81,7 +81,7 @@ Module.register("clock",{
 
 		var hourSymbol = "HH";
 		if (this.config.timeFormat !== 24) {
-			hourSymbol = "h";
+			hourSymbol = "hh";
 		}
 
 		if (this.config.clockBold === true) {
@@ -94,7 +94,7 @@ Module.register("clock",{
 			dateWrapper.innerHTML = now.format(this.config.dateFormat);
 		}
 		if (this.config.showWeek) {
-			weekWrapper.innerHTML = this.translate("WEEK", { weekNumber: now.week() });
+			weekWrapper.innerHTML = this.translate("WEEK", { weekNumber: now.week() }) + " &middot; Day " + now.dayOfYear();
 		}
 		timeWrapper.innerHTML = timeString;
 		secondsWrapper.innerHTML = now.format("ss");
