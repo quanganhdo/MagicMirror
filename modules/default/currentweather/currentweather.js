@@ -20,6 +20,7 @@ Module.register("currentweather",{
 		timeFormat: config.timeFormat,
 		showPeriod: true,
 		showPeriodUpper: false,
+    showWindSpeed: true,
 		showWindDirection: true,
 		showWindDirectionAsArrow: false,
 		useBeaufort: true,
@@ -120,13 +121,15 @@ Module.register("currentweather",{
 		var small = document.createElement("div");
 		small.className = "normal medium";
 
-		var windIcon = document.createElement("span");
-		windIcon.className = "wi wi-strong-wind dimmed";
-		small.appendChild(windIcon);
+    if (this.config.showWindSpeed) {
+  		var windIcon = document.createElement("span");
+  		windIcon.className = "wi wi-strong-wind dimmed";
+  		small.appendChild(windIcon);
 
-		var windSpeed = document.createElement("span");
-		windSpeed.innerHTML = " " + this.windSpeed;
-		small.appendChild(windSpeed);
+  		var windSpeed = document.createElement("span");
+  		windSpeed.innerHTML = " " + this.windSpeed;
+  		small.appendChild(windSpeed);
+    }
 
 		if (this.config.showWindDirection) {
 			var windDirection = document.createElement("sup");
@@ -139,9 +142,12 @@ Module.register("currentweather",{
 			}
 			small.appendChild(windDirection);
 		}
-		var spacer = document.createElement("span");
-		spacer.innerHTML = "&nbsp;";
-		small.appendChild(spacer);
+    
+    if (this.config.showWindSpeed || this.config.showWindDirection) {
+  		var spacer = document.createElement("span");
+  		spacer.innerHTML = "&nbsp;";
+  		small.appendChild(spacer);      
+    }
 
 		if (this.config.showHumidity) {
 			var humidity = document.createElement("span");
@@ -254,7 +260,7 @@ Module.register("currentweather",{
 
 			var feelsLike = document.createElement("span");
 			feelsLike.className = "dimmed";
-			feelsLike.innerHTML = this.translate("FEELS") + " " + this.feelsLike + degreeLabel;
+			feelsLike.innerHTML = "Feels Like" + " " + this.feelsLike + degreeLabel;
 			small.appendChild(feelsLike);
 
 			wrapper.appendChild(small);
