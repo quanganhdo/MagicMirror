@@ -24,6 +24,7 @@ Module.register("currentweather",{
 		showWindDirection: true,
 		showWindDirectionAsArrow: false,
 		useBeaufort: true,
+		appendLocationNameToHeader: false,
 		useKMPHwind: false,
 		lang: config.language,
 		decimalSymbol: ".",
@@ -275,6 +276,10 @@ Module.register("currentweather",{
 			return this.data.header + " " + this.fetchedLocationName;
 		}
 
+		if (this.config.useLocationAsHeader && this.config.location !== false) {
+			return this.config.location;
+		}
+		
 		return this.data.header;
 	},
 
@@ -359,7 +364,7 @@ Module.register("currentweather",{
 		} else if(this.config.location) {
 			params += "q=" + this.config.location;
 		} else if (this.firstEvent && this.firstEvent.geo) {
-			params += "lat=" + this.firstEvent.geo.lat + "&lon=" + this.firstEvent.geo.lon
+			params += "lat=" + this.firstEvent.geo.lat + "&lon=" + this.firstEvent.geo.lon;
 		} else if (this.firstEvent && this.firstEvent.location) {
 			params += "q=" + this.firstEvent.location;
 		} else {
@@ -389,6 +394,7 @@ Module.register("currentweather",{
 
 		this.humidity = parseFloat(data.main.humidity);
 		this.temperature = this.roundValue(data.main.temp);
+		this.fetchedLocationName = data.name;
 		this.feelsLike = 0;
 
 		if (this.config.useBeaufort){
